@@ -1,12 +1,9 @@
 <template>
   <div class="container">
     <h1>Vue.js layout</h1>
-    <!-- Render the files data with a resuable component (a list or card up to you!) -->
-    <pre>// TODO: replace this block 👇 with a resusable component that renders elements from the files array
-      <code>
-        <Card :files="files"></Card>
-      </code>
-    </pre>
+    <code>
+      <Card :files="files"></Card>
+    </code>
   </div>
 </template>
 <style lang="scss" scoped>
