@@ -4,7 +4,7 @@
     <!-- Render the files data with a resuable component (a list or card up to you!) -->
     <pre>// TODO: replace this block 👇 with a resusable component that renders elements from the files array
       <code>
-        files: <Card></Card>
+        <Card :files="files"></Card>
       </code>
     </pre>
   </div>
