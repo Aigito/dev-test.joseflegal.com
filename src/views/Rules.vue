@@ -119,25 +119,25 @@ export default {
       let results = {};
 
       // for starters, grab all the rule ids from the local rule_group.rule_ids
-      for (const rule_id of rule_group.rule_ids) {
-        rulesIdToBeTested.push(rule_id);
-      }
+      Array.prototype.push.apply(rulesIdToBeTested, rule_group.rule_ids);
 
       // then, if there are other associated rule_group_ids
-      // we will want to iterate through them, and then
-      // also grab the rule ids from those associated rule_groups
+      // we will want to also grab the rule ids from those associated rule_groups
       if (rule_group.rule_group_ids) {
         for (const group_id of rule_group.rule_group_ids) {
-          for (const rule_id of this.rule_groups[group_id].rule_ids) {
-            rulesIdToBeTested.push(rule_id);
-          }
+          Array.prototype.push.apply(
+            rulesIdToBeTested,
+            this.rule_groups[group_id].rule_ids
+          );
         }
       }
 
+      // get rid of any potential duplicate ids
+      Array.from(new Set(rulesIdToBeTested));
+
       // Now we have collected all the rule ids that we want to test
-      // we will access the this.rules along with the ID to access each individual rule
-      // and check each rule before saving the result to the
-      // results Object {a: true, b: false, ...}
+      // we will access access each individual rule
+      // and save the result to the results Object {a: true, b: false, ...}
       for (const id of rulesIdToBeTested) {
         let rule = this.rules[id];
         let question_id = rule.question_id;
