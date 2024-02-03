@@ -118,11 +118,7 @@ export default {
       let rulesIdToBeTested = [];
       let results = {};
 
-      // for starters, grab all the rule ids from the local rule_group.rule_ids
-      Array.prototype.push.apply(rulesIdToBeTested, rule_group.rule_ids);
-
-      // then, if there are other associated rule_group_ids
-      // we will want to also grab the rule ids from those associated rule_groups
+      // for starters, grab the rule ids from associated rule_groups, if any
       if (rule_group.rule_group_ids) {
         for (const group_id of rule_group.rule_group_ids) {
           Array.prototype.push.apply(
@@ -131,6 +127,9 @@ export default {
           );
         }
       }
+
+      // then, grab all the rule ids from the local rule_group.rule_ids
+      Array.prototype.push.apply(rulesIdToBeTested, rule_group.rule_ids);
 
       // get rid of any potential duplicate ids
       Array.from(new Set(rulesIdToBeTested));
@@ -143,7 +142,7 @@ export default {
         let question_id = rule.question_id;
 
         if (question_id === "B" && results["A"]) {
-          break;
+          continue;
         }
 
         let result = this.checkRule(rule);
