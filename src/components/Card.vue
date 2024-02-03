@@ -11,7 +11,7 @@
           </span>
           <h4>{{ file.filename }}</h4>
           <p>File Description: {{ file.description }}</p>
-          <p>Created At: {{ pretty_date(file.date) }}</p>
+          <p>Created At: {{ prettyDate(file.date) }}</p>
         </div>
       </div>
     </div>
@@ -30,7 +30,7 @@ export default {
     },
   },
   methods: {
-    pretty_date(date) {
+    prettyDate(date) {
       return new Date(date).toString().slice(4, 15);
     },
   },
