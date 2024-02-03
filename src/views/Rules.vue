@@ -115,29 +115,37 @@ export default {
       //////////////////////////////////////////////////////
       // TODO: check that all rules and groups apply
       // ~10 - 15 lines of code
-      let rulesIdToBeTested = [1, 2, 3];
-      let rulesToBeTested = [];
+      let rulesIdToBeTested = [];
       let results = {};
 
-      // iterates through the ID array and grabs each rule that apply and then,
-      // saves each rule that is going to be tested to the rulesToBeTested array
-
-      // BUT doing this is inefficient as we are grabbing and saving the rule in a
-      // temporary array, a bette way would be to iterate through the ID,
-      // and grab and test at the same time, without first caching the individual rules
-      for (const id of rulesIdToBeTested) {
-        rulesToBeTested.push(this.rules[id]);
+      // for starters, grab all the rule ids from the local rule_group.rule_ids
+      for (const rule_id of rule_group.rule_ids) {
+        rulesIdToBeTested.push(rule_id);
       }
 
-      // iterates through the rulesToBeTested array and checks each rule
-      // saves the result to the results Object {a: true, b: false, ...}
-      for (const rule of rulesToBeTested) {
+      // then, if there are other associated rule_group_ids
+      // we will want to iterate through them, and then
+      // also grab the rule ids from those associated rule_groups
+      if (rule_group.rule_group_ids) {
+        for (const group_id of rule_group.rule_group_ids) {
+          for (const rule_id of this.rule_groups[group_id].rule_ids) {
+            rulesIdToBeTested.push(rule_id);
+          }
+        }
+      }
+
+      // Now we have collected all the rule ids that we want to test
+      // we will access the this.rules along with the ID to access each individual rule
+      // and check each rule before saving the result to the
+      // results Object {a: true, b: false, ...}
+      for (const id of rulesIdToBeTested) {
+        let rule = this.rules[id];
         let question_id = rule.question_id;
         let result = this.checkRule(rule);
         results[question_id] = result;
       }
 
-      // return result for multiple group example
+      // @return Boolean result for multiple group example
       return (results["A"] || results["B"]) && results["C"];
       //////////////////////////////////////////////////////
     },
