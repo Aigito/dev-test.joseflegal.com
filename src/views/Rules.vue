@@ -141,6 +141,11 @@ export default {
       for (const id of rulesIdToBeTested) {
         let rule = this.rules[id];
         let question_id = rule.question_id;
+
+        if (question_id === "B" && results["A"]) {
+          break;
+        }
+
         let result = this.checkRule(rule);
         results[question_id] = result;
       }
