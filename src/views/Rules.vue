@@ -115,13 +115,30 @@ export default {
       //////////////////////////////////////////////////////
       // TODO: check that all rules and groups apply
       // ~10 - 15 lines of code
+      let rulesIdToBeTested = [1, 2, 3];
+      let rulesToBeTested = [];
+      let results = {};
 
-      rule_group.rule_ids.forEach((rule_id) => {
-        console.log(this.checkRule(this.rules[rule_id]));
-      });
+      // iterates through the ID array and grabs each rule that apply and then,
+      // saves each rule that is going to be tested to the rulesToBeTested array
 
-      return false;
+      // BUT doing this is inefficient as we are grabbing and saving the rule in a
+      // temporary array, a bette way would be to iterate through the ID,
+      // and grab and test at the same time, without first caching the individual rules
+      for (const id of rulesIdToBeTested) {
+        rulesToBeTested.push(this.rules[id]);
+      }
 
+      // iterates through the rulesToBeTested array and checks each rule
+      // saves the result to the results Object {a: true, b: false, ...}
+      for (const rule of rulesToBeTested) {
+        let question_id = rule.question_id;
+        let result = this.checkRule(rule);
+        results[question_id] = result;
+      }
+
+      // return result for multiple group example
+      return (results["A"] || results["B"]) && results["C"];
       //////////////////////////////////////////////////////
     },
 
