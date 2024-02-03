@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="container">
-      <button class="button" v-on:click="filterSwitch">KITTENS RULEZ!</button>
-      <div class="card" v-for="file in filterByKittens" :key="file.id">
+      <button class="button" v-on:click="toggleFilter">KITTENS RULEZ!</button>
+      <div class="card" v-for="file in filteredFiles" :key="file.id">
         <div class="card-image">
           <img :src="file.src" alt="hi" />
         </div>
@@ -12,7 +12,7 @@
           </span>
           <h4>{{ file.filename }}</h4>
           <p>File Description: {{ file.description }}</p>
-          <p>Created At: {{ prettyDate(file.date) }}</p>
+          <p>Created At: {{ formattedDate(file.date) }}</p>
         </div>
       </div>
     </div>
@@ -33,24 +33,29 @@ export default {
     },
   },
   methods: {
-    filterSwitch() {
+    toggleFilter() {
       this.filterOn = !this.filterOn;
     },
-    prettyDate(date) {
+    formattedDate(date) {
       return new Date(date).toString().slice(4, 15);
+    },
+    filterAndSortKittenFiles() {
+      const filteredFiles = this.files.filter((file) =>
+        file.tags.includes("kitten")
+      );
+      const sortedByDate = filteredFiles.sort(
+        (a, b) => new Date(b.date) - new Date(a.date)
+      );
+      return sortedByDate;
     },
   },
   computed: {
-    filterByKittens() {
-      const filteredResult = this.files.filter((file) =>
-        file.tags.includes("kitten")
-      );
-
-      const sortedByDate = filteredResult.sort(
-        (a, b) => new Date(b.date) - new Date(a.date)
-      );
-
-      return sortedByDate;
+    filteredFiles() {
+      if (this.filterOn) {
+        return this.filterAndSortKittenFiles();
+      } else {
+        return this.files;
+      }
     },
   },
 };
