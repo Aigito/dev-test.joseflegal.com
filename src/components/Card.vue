@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="container">
-      <div class="card" v-for="file in files" :key="file.id">
+      <button class="button" v-on:click="filterSwitch">KITTENS RULEZ!</button>
+      <div class="card" v-for="file in filterByKittens" :key="file.id">
         <div class="card-image">
           <img :src="file.src" alt="hi" />
         </div>
@@ -21,7 +22,9 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      filterOn: false,
+    };
   },
   props: {
     files: {
@@ -30,8 +33,24 @@ export default {
     },
   },
   methods: {
+    filterSwitch() {
+      this.filterOn = !this.filterOn;
+    },
     prettyDate(date) {
       return new Date(date).toString().slice(4, 15);
+    },
+  },
+  computed: {
+    filterByKittens() {
+      const filteredResult = this.files.filter((file) =>
+        file.tags.includes("kitten")
+      );
+
+      const sortedByDate = filteredResult.sort(
+        (a, b) => new Date(b.date) - new Date(a.date)
+      );
+
+      return sortedByDate;
     },
   },
 };
