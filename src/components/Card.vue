@@ -4,7 +4,7 @@
       <button class="button" v-on:click="toggleFilter">KITTENS RULEZ!</button>
       <div class="card" v-for="file in filteredFiles" :key="file.id">
         <div class="card-image">
-          <img :src="file.src" alt="hi" />
+          <img :src="file.src" alt="picture of something cool" />
         </div>
         <div class="card-body">
           <span class="tag tag-aqua">
@@ -26,12 +26,6 @@ export default {
       filterOn: false,
     };
   },
-  props: {
-    files: {
-      type: Array,
-      required: true,
-    },
-  },
   methods: {
     toggleFilter() {
       this.filterOn = !this.filterOn;
@@ -40,10 +34,10 @@ export default {
       return new Date(date).toString().slice(4, 15);
     },
     filterAndSortKittenFiles() {
-      const filteredFiles = this.files.filter((file) =>
-        file.tags.includes("kitten")
+      const filesWithKittenTag = this.$store.state["file"].files.filter(
+        (file) => file.tags.includes("kitten")
       );
-      const sortedByDate = filteredFiles.sort(
+      const sortedByDate = filesWithKittenTag.sort(
         (a, b) => new Date(b.date) - new Date(a.date)
       );
       return sortedByDate;
@@ -54,7 +48,7 @@ export default {
       if (this.filterOn) {
         return this.filterAndSortKittenFiles();
       } else {
-        return this.files;
+        return this.$store.state["file"].files;
       }
     },
   },

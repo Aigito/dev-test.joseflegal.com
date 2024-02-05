@@ -2,7 +2,7 @@
   <div class="container">
     <h1>Vue.js layout</h1>
     <code>
-      <Card :files="files"></Card>
+      <Card></Card>
     </code>
   </div>
 </template>
@@ -32,14 +32,9 @@ export default {
   components: {
     Card,
   },
-  data() {
-    return {
-      files: [],
-    };
-  },
   created() {
     api.files.get().then((res) => {
-      this.files = res;
+      this.$store.state["file"].files = res;
     });
   },
 };
