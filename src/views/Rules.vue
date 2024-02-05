@@ -118,7 +118,10 @@ export default {
       let rulesIdToBeTested = [];
       let results = {};
 
-      // for starters, grab the rule ids from associated rule_groups, if any
+      // first off, grab all the rule ids from the local rule_group.rule_ids
+      Array.prototype.push.apply(rulesIdToBeTested, rule_group.rule_ids);
+
+      // then, grab the rule ids from associated rule_groups, if any
       if (rule_group.rule_group_ids) {
         for (const group_id of rule_group.rule_group_ids) {
           Array.prototype.push.apply(
@@ -128,11 +131,26 @@ export default {
         }
       }
 
-      // then, grab all the rule ids from the local rule_group.rule_ids
-      Array.prototype.push.apply(rulesIdToBeTested, rule_group.rule_ids);
+      // creating a new Array of rule objects instead of being a collection of rule objects
+      const arrayData = Object.keys(this.rules).map((key) => {
+        return {
+          id: key,
+          ...this.rules[key],
+        };
+      });
 
       // get rid of any potential duplicate ids
       Array.from(new Set(rulesIdToBeTested));
+
+      // sort the IDs in ascending order of the Question IDs
+      // i.e. instead of sorted by the rules keys ("1", "2", "3")
+      // it will be sorted by the Question Letter IDs ("A", "B", "C")
+      rulesIdToBeTested.sort((a, b) => {
+        const questionA = arrayData.find((question) => question.id === a.toString());
+        const questionB = arrayData.find((question) => question.id === b.toString());
+
+        return questionA.question_id.localeCompare(questionB.question_id);
+      });
 
       // Now we have collected all the rule ids that we want to test
       // we will access access each individual rule
