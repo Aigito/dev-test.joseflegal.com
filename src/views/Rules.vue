@@ -117,10 +117,10 @@ export default {
       // ~10 - 15 lines of code
       let ruleIdsToBeTested = [];
       let results = {};
-      const arrayData = Object.keys(this.rules).map((key) => {
+      const rulesArray = Object.keys(this.rules).map((key) => {
         return {
           id: key,
-          ...this.rules[key],
+          question_id: this.rules[key].question_id,
         };
       });
 
@@ -128,7 +128,7 @@ export default {
       ruleIdsToBeTested = this.collectRuleIds(rule_group);
 
       // @return {Array} of unique rule ids sorted by question_id in asc order
-      ruleIdsToBeTested = this.rulesIdSort(ruleIdsToBeTested, arrayData);
+      ruleIdsToBeTested = this.ruleIdsSort(ruleIdsToBeTested, rulesArray);
 
       for (const id of ruleIdsToBeTested) {
         let rule = this.rules[id];
@@ -142,7 +142,7 @@ export default {
         results[question_id] = result;
       }
 
-      // @return Boolean result for multiple group example
+      // @return {Boolean} result for multiple group example
       return (results["A"] || results["B"]) && results["C"];
       //////////////////////////////////////////////////////
     },
@@ -184,7 +184,7 @@ export default {
 
       return Array.from(new Set(ids));
     },
-    rulesIdSort(ids, arrayData) {
+    ruleIdsSort(ids, arrayData) {
       // sorts rule ids based on question_ids' letter code in asc order
 
       ids.sort((a, b) => {
