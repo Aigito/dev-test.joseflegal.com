@@ -115,23 +115,8 @@ export default {
       //////////////////////////////////////////////////////
       // TODO: check that all rules and groups apply
       // ~10 - 15 lines of code
-      let rulesIdToBeTested = [];
+      let ruleIdsToBeTested = [];
       let results = {};
-
-      // first off, grab all the rule ids from the local rule_group.rule_ids
-      Array.prototype.push.apply(rulesIdToBeTested, rule_group.rule_ids);
-
-      // then, grab the rule ids from associated rule_groups, if any
-      if (rule_group.rule_group_ids) {
-        for (const group_id of rule_group.rule_group_ids) {
-          Array.prototype.push.apply(
-            rulesIdToBeTested,
-            this.rule_groups[group_id].rule_ids
-          );
-        }
-      }
-
-      // creating a new Array of rule objects instead of being a collection of rule objects
       const arrayData = Object.keys(this.rules).map((key) => {
         return {
           id: key,
@@ -139,23 +124,13 @@ export default {
         };
       });
 
-      // get rid of any potential duplicate ids
-      Array.from(new Set(rulesIdToBeTested));
+      // @return {Array} of unique rule ids
+      ruleIdsToBeTested = this.collectRuleIds(rule_group);
 
-      // sort the IDs in ascending order of the Question IDs
-      // i.e. instead of sorted by the rules keys ("1", "2", "3")
-      // it will be sorted by the Question Letter IDs ("A", "B", "C")
-      rulesIdToBeTested.sort((a, b) => {
-        const questionA = arrayData.find((question) => question.id === a.toString());
-        const questionB = arrayData.find((question) => question.id === b.toString());
+      // @return {Array} of unique rule ids sorted by question_id in asc order
+      ruleIdsToBeTested = this.rulesIdSort(ruleIdsToBeTested, arrayData);
 
-        return questionA.question_id.localeCompare(questionB.question_id);
-      });
-
-      // Now we have collected all the rule ids that we want to test
-      // we will access access each individual rule
-      // and save the result to the results Object {a: true, b: false, ...}
-      for (const id of rulesIdToBeTested) {
+      for (const id of ruleIdsToBeTested) {
         let rule = this.rules[id];
         let question_id = rule.question_id;
 
@@ -171,7 +146,6 @@ export default {
       return (results["A"] || results["B"]) && results["C"];
       //////////////////////////////////////////////////////
     },
-
     checkRule(rule) {
       // cheking that a rule applies
       // returns if combination of expected answer, operation and user answer is true
@@ -193,6 +167,38 @@ export default {
         return false;
       }
       return false;
+    },
+    collectRuleIds(rule_group) {
+      // collects rule ids from both local and associated rule groups
+      // returns a unique set of ids
+
+      let ids = [];
+
+      Array.prototype.push.apply(ids, rule_group.rule_ids);
+
+      if (rule_group.rule_group_ids) {
+        for (const group_id of rule_group.rule_group_ids) {
+          Array.prototype.push.apply(ids, this.rule_groups[group_id].rule_ids);
+        }
+      }
+
+      return Array.from(new Set(ids));
+    },
+    rulesIdSort(ids, arrayData) {
+      // sorts rule ids based on question_ids' letter code in asc order
+
+      ids.sort((a, b) => {
+        const questionA = arrayData.find(
+          (question) => question.id === a.toString()
+        );
+        const questionB = arrayData.find(
+          (question) => question.id === b.toString()
+        );
+
+        return questionA.question_id.localeCompare(questionB.question_id);
+      });
+
+      return ids;
     },
   },
   created() {
