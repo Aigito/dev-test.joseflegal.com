@@ -22,7 +22,6 @@ code {
 </style>
 <script>
 // @ is an alias to /src
-import api from "@/api";
 
 // import Card component
 import Card from "@/components/Card.vue";
@@ -33,8 +32,8 @@ export default {
     Card,
   },
   created() {
-    api.files.get().then((res) => {
-      this.$store.state["file"].files = res;
+    this.$store.dispatch("file/fetchFiles").then((res) => {
+      console.log("Files fetched: ", res);
     });
   },
 };
