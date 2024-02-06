@@ -57,7 +57,7 @@
       <em>logic</em> determines logical operation between rules and groups.
     </p>
     <pre><code>rule_groups:{{rule_groups}}
-rules:{{rules}}</code></pre>
+rules:{{ this.$store.state["rule"].rules }}</code></pre>
     <h2>Task</h2>
     <p>
       Please, finish the <em>checkGroup</em> function in the
@@ -209,7 +209,7 @@ export default {
     // });
 
     this.$store.dispatch("rule/fetchAnswers");
-    this.rules = this.$store.state["rule"].rules;
+    this.$store.dispatch("rule/fetchRules");
     this.rule_groups = this.$store.state["rule"].rule_groups;
   },
 };

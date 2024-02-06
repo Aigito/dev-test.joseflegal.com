@@ -15,10 +15,18 @@ const rule = {
         commit("fetchAnswers", res);
       })
     },
+    fetchRules({ commit }) {
+      api.rules.get().then((res) => {
+        commit("fetchRules", res);
+      })
+    },
   },
   mutations: {
     fetchAnswers(state, payload) {
       Vue.set(state, "answers", payload);
+    },
+    fetchRules(state, payload) {
+      Vue.set(state, "rules", payload);
     },
   },
 };
