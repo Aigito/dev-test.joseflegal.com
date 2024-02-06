@@ -56,8 +56,8 @@
       <strong>multiple groups example</strong> above. Please, note how property
       <em>logic</em> determines logical operation between rules and groups.
     </p>
-    <pre><code>rule_groups:{{ this.$store.state["rule"].rule_groups }}
-rules:{{ this.$store.state["rule"].rules }}</code></pre>
+    <pre><code>rule_groups:{{ this.ruleGroups }}
+rules:{{ this.rules }}</code></pre>
     <h2>Task</h2>
     <p>
       Please, finish the <em>checkGroup</em> function in the
@@ -68,12 +68,11 @@ rules:{{ this.$store.state["rule"].rules }}</code></pre>
     <h2>Result</h2>
     <p>With given user answers:</p>
     <pre>
-<code>answers:{{ this.$store.state["rule"].answers }}</code>
+<code>answers:{{ this.answers }}</code>
     </pre>
     <p><strong>multiple groups example</strong> is:</p>
     <pre>
-<!-- <code v-if="ruleDataLoaded">{{checkGroup(this.rule_groups[1])}}</code> -->
-<code v-if="ruleDataLoaded">All data loaded!{{ this.$store.state["rule"].answers }}</code>
+<code v-if="ruleGroups">{{checkGroup(ruleGroups[1])}}</code>
       </pre>
   </div>
 </template>
@@ -97,11 +96,6 @@ img {
 
 export default {
   name: "Rules",
-  data() {
-    return {
-      ruleDataLoaded: false,
-    };
-  },
   methods: {
     checkGroup(rule_group) {
       // cheking that rules and groups apply
@@ -113,11 +107,10 @@ export default {
       //////////////////////////////////////////////////////
       // TODO: check that all rules and groups apply
       // ~10 - 15 lines of code
-      let ruleIds = [];
       let results = {};
 
       // @return {Array} of unique rule ids sorted in asc order of question_id letter code
-      ruleIds = this.collectRuleIds(rule_group);
+      let ruleIds = this.collectRuleIds(rule_group);
 
       for (const id of ruleIds) {
         let rule = this.rules[id];
@@ -133,10 +126,10 @@ export default {
 
       // @return {Boolean} result for multiple group example
       return (results["A"] || results["B"]) && results["C"];
-      //////////////////////////////////////////////////////
+      // ////////////////////////////////////////////////////
     },
     checkRule(rule) {
-      // cheking that a rule applies
+      // cheking  that a rule applies
       // returns if combination of expected answer, operation and user answer is true
 
       console.log("Rule:");
@@ -173,7 +166,7 @@ export default {
 
       if (rule_group.rule_group_ids) {
         for (const group_id of rule_group.rule_group_ids) {
-          Array.prototype.push.apply(ids, this.rule_groups[group_id].rule_ids);
+          Array.prototype.push.apply(ids, this.ruleGroups[group_id].rule_ids);
         }
       }
 
@@ -198,20 +191,23 @@ export default {
       return idsArray;
     },
   },
+  computed: {
+    answers() {
+      return this.$store.getters["rule/answers"];
+    },
+    rules() {
+      return this.$store.getters["rule/rules"];
+    },
+    ruleGroups() {
+      return this.$store.getters["rule/rule_groups"];
+    },
+  },
   created() {
     // loading data from the API
-
-    // api.rules.get().then((res) => {
-    //   this.rules = res;
-    // });
-    // api.rule_groups.get().then((res) => {
-    //   this.rule_groups = res;
-    // });
 
     this.$store.dispatch("rule/fetchAnswers");
     this.$store.dispatch("rule/fetchRules");
     this.$store.dispatch("rule/fetchRuleGroups");
-    this.ruleDataLoaded = true;
   },
 };
 </script>
