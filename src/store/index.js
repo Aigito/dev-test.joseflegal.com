@@ -3,6 +3,7 @@ import Vuex from "vuex";
 
 import user from "./user";
 import file from "./file";
+import rule from "./rule";
 
 Vue.use(Vuex);
 
@@ -13,5 +14,6 @@ export default new Vuex.Store({
   modules: {
     user,
     file,
+    rule,
   },
 });

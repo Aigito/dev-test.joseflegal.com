@@ -68,7 +68,7 @@ rules:{{rules}}</code></pre>
     <h2>Result</h2>
     <p>With given user answers:</p>
     <pre>
-<code>answers:{{answers}}</code>
+<code>answers:{{ this.$store.state["rule"].answers }}</code>
     </pre>
     <p><strong>multiple groups example</strong> is:</p>
     <pre>
@@ -93,14 +93,12 @@ img {
 </style>
 <script>
 // @ is an alias to /src
-import api from "@/api";
 
 export default {
   name: "Rules",
   data() {
     return {
       rule_groups: false,
-      answers: false,
       rules: false,
     };
   },
@@ -203,15 +201,16 @@ export default {
   created() {
     // loading data from the API
 
-    api.answers.get().then((res) => {
-      this.answers = res;
-    });
-    api.rules.get().then((res) => {
-      this.rules = res;
-    });
-    api.rule_groups.get().then((res) => {
-      this.rule_groups = res;
-    });
+    // api.rules.get().then((res) => {
+    //   this.rules = res;
+    // });
+    // api.rule_groups.get().then((res) => {
+    //   this.rule_groups = res;
+    // });
+
+    this.$store.dispatch("rule/fetchAnswers");
+    this.rules = this.$store.state["rule"].rules;
+    this.rule_groups = this.$store.state["rule"].rule_groups;
   },
 };
 </script>
