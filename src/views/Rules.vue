@@ -72,7 +72,8 @@ rules:{{ this.$store.state["rule"].rules }}</code></pre>
     </pre>
     <p><strong>multiple groups example</strong> is:</p>
     <pre>
-<code v-if="rule_groups && rules && answers">{{checkGroup(this.rule_groups[1])}}</code>
+<!-- <code v-if="ruleDataLoaded">{{checkGroup(this.rule_groups[1])}}</code> -->
+<code v-if="ruleDataLoaded">All data loaded!{{ this.$store.state["rule"].answers }}</code>
       </pre>
   </div>
 </template>
@@ -98,8 +99,7 @@ export default {
   name: "Rules",
   data() {
     return {
-      rule_groups: false,
-      rules: false,
+      ruleDataLoaded: false,
     };
   },
   methods: {
@@ -211,6 +211,7 @@ export default {
     this.$store.dispatch("rule/fetchAnswers");
     this.$store.dispatch("rule/fetchRules");
     this.$store.dispatch("rule/fetchRuleGroups");
+    this.ruleDataLoaded = true;
   },
 };
 </script>

@@ -21,7 +21,7 @@ const rule = {
       })
     },
     fetchRuleGroups({ commit }) {
-      api.rules.get().then((res) => {
+      api.rule_groups.get().then((res) => {
         commit("fetchRuleGroups", res);
       })
     },
