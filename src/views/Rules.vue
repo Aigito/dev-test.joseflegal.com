@@ -115,22 +115,13 @@ export default {
       //////////////////////////////////////////////////////
       // TODO: check that all rules and groups apply
       // ~10 - 15 lines of code
-      let ruleIdsToBeTested = [];
+      let ruleIds = [];
       let results = {};
-      const rulesArray = Object.keys(this.rules).map((key) => {
-        return {
-          id: key,
-          question_id: this.rules[key].question_id,
-        };
-      });
 
-      // @return {Array} of unique rule ids
-      ruleIdsToBeTested = this.collectRuleIds(rule_group);
+      // @return {Array} of unique rule ids sorted in asc order of question_id letter code
+      ruleIds = this.collectRuleIds(rule_group);
 
-      // @return {Array} of unique rule ids sorted by question_id in asc order
-      ruleIdsToBeTested = this.ruleIdsSort(ruleIdsToBeTested, rulesArray);
-
-      for (const id of ruleIdsToBeTested) {
+      for (const id of ruleIds) {
         let rule = this.rules[id];
         let question_id = rule.question_id;
 
@@ -170,9 +161,15 @@ export default {
     },
     collectRuleIds(rule_group) {
       // collects rule ids from both local and associated rule groups
-      // returns a unique set of ids
+      // returns a unique set of ids sorted by asc order
 
       let ids = [];
+      const rulesArray = Object.keys(this.rules).map((key) => {
+        return {
+          id: key,
+          question_id: this.rules[key].question_id,
+        };
+      });
 
       Array.prototype.push.apply(ids, rule_group.rule_ids);
 
@@ -182,23 +179,25 @@ export default {
         }
       }
 
-      return Array.from(new Set(ids));
+      let unsortedUniqueIds = Array.from(new Set(ids));
+
+      return this.sortRuleIds(unsortedUniqueIds, rulesArray);
     },
-    ruleIdsSort(ids, arrayData) {
+    sortRuleIds(idsArray, rulesArray) {
       // sorts rule ids based on question_ids' letter code in asc order
 
-      ids.sort((a, b) => {
-        const questionA = arrayData.find(
+      idsArray.sort((a, b) => {
+        const questionA = rulesArray.find(
           (question) => question.id === a.toString()
         );
-        const questionB = arrayData.find(
+        const questionB = rulesArray.find(
           (question) => question.id === b.toString()
         );
 
         return questionA.question_id.localeCompare(questionB.question_id);
       });
 
-      return ids;
+      return idsArray;
     },
   },
   created() {
