@@ -20,6 +20,11 @@ const rule = {
         commit("fetchRules", res);
       })
     },
+    fetchRuleGroups({ commit }) {
+      api.rules.get().then((res) => {
+        commit("fetchRuleGroups", res);
+      })
+    },
   },
   mutations: {
     fetchAnswers(state, payload) {
@@ -27,6 +32,9 @@ const rule = {
     },
     fetchRules(state, payload) {
       Vue.set(state, "rules", payload);
+    },
+    fetchRuleGroups(state, payload) {
+      Vue.set(state, "rule_groups", payload);
     },
   },
 };

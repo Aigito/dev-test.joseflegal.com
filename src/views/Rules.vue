@@ -56,7 +56,7 @@
       <strong>multiple groups example</strong> above. Please, note how property
       <em>logic</em> determines logical operation between rules and groups.
     </p>
-    <pre><code>rule_groups:{{rule_groups}}
+    <pre><code>rule_groups:{{ this.$store.state["rule"].rule_groups }}
 rules:{{ this.$store.state["rule"].rules }}</code></pre>
     <h2>Task</h2>
     <p>
@@ -210,7 +210,7 @@ export default {
 
     this.$store.dispatch("rule/fetchAnswers");
     this.$store.dispatch("rule/fetchRules");
-    this.rule_groups = this.$store.state["rule"].rule_groups;
+    this.$store.dispatch("rule/fetchRuleGroups");
   },
 };
 </script>
