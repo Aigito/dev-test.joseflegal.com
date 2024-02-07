@@ -119,7 +119,10 @@ describe("Rules", () => {
       });
 
       it("Answer to C contain z", () => {
-        store.commit("rule/setAnswer", { id: "C", value: "jghfdhsgazhfudjewui23!@#" });
+        store.commit("rule/setAnswer", {
+          id: "C",
+          value: "jghfdhsgazhfudjewui23!@#",
+        });
         let result = wrapper.vm.checkRule(ruleC);
         expect(result).toBeTruthy();
       });
@@ -139,7 +142,10 @@ describe("Rules", () => {
       });
 
       it("Answer to C does not contain z", () => {
-        store.commit("rule/setAnswer", { id: "C", value: "jghfdhsgahfudjewui23!@#" });
+        store.commit("rule/setAnswer", {
+          id: "C",
+          value: "jghfdhsgahfudjewui23!@#",
+        });
         let result = wrapper.vm.checkRule(ruleC);
         expect(result).not.toBeTruthy();
       });
