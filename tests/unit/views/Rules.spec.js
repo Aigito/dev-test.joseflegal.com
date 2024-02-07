@@ -15,6 +15,7 @@ describe("Rules", () => {
           namespaced: true,
           state: {
             answers: false,
+            results: {},
             rules: false,
             rule_groups: false,
           },
@@ -61,15 +62,24 @@ describe("Rules", () => {
                 },
               };
             }),
+            saveResults: jest.fn(({ commit }, { question_id, result }) => {
+              commit("saveResults", { question_id, result });
+            }),
           },
           mutations: {
             setAnswer: (state, { id, value }) => {
               state.answers[id] = value;
             },
+            saveResults: (state, { question_id, result }) => {
+              state.results[question_id] = result;
+            },
           },
           getters: {
             answers: (state) => {
               return state.answers;
+            },
+            results: (state) => {
+              return state.results;
             },
             rules: (state) => {
               return state.rules;
