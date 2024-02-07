@@ -112,6 +112,7 @@ export default {
         let rule = this.rules[id];
         let question_id = rule.question_id;
 
+        // skip Question[B] if Question[A] returns true
         if (question_id === "B" && this.results["A"]) {
           continue;
         }

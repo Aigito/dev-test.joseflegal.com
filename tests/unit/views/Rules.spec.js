@@ -6,7 +6,7 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 
 describe("Rules", () => {
-  let ruleGroup, store, wrapper;
+  let ruleGroup, store, storeState, wrapper;
 
   beforeEach(() => {
     store = new Vuex.Store({
@@ -97,14 +97,14 @@ describe("Rules", () => {
       store,
     });
 
-    ruleGroup = store._modulesNamespaceMap["rule/"].state.rule_groups[1];
+    storeState = store._modulesNamespaceMap["rule/"].state;
+    ruleGroup = storeState.rule_groups[1];
   });
 
   describe("returns correct boolean result when", () => {
     it("A is true && C is true (B is skipped)", () => {
       let result = wrapper.vm.checkGroup(ruleGroup);
       expect(result).toBe(true);
-      // TODO: Expect, result to not have B in it
     });
 
     it("A is true && C is false (B is skipped)", () => {
@@ -114,7 +114,6 @@ describe("Rules", () => {
       });
       let result = wrapper.vm.checkGroup(ruleGroup);
       expect(result).toBe(false);
-      // TODO: Expect, result to not have B in it
     });
 
     it("(A is false || B is true) && C is true", () => {
@@ -150,7 +149,5 @@ describe("Rules", () => {
       let result = wrapper.vm.checkGroup(ruleGroup);
       expect(result).toBe(false);
     });
-
-    // TODO: If A and B are both false, C should not have been evaluated and the test stops
   });
 });
