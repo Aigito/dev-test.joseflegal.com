@@ -6,7 +6,7 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 
 describe("Rules", () => {
-  let ruleGroup, store, storeState, wrapper;
+  let ruleA, ruleB, ruleC, ruleGroup, store, storeState, wrapper;
 
   beforeEach(() => {
     store = new Vuex.Store({
@@ -99,20 +99,49 @@ describe("Rules", () => {
 
     storeState = store._modulesNamespaceMap["rule/"].state;
     ruleGroup = storeState.rule_groups[1];
+    ruleA = storeState.rules["2"];
+    ruleB = storeState.rules["3"];
+    ruleC = storeState.rules["1"];
   });
 
   describe("#checkRule", () => {
     describe("returns true when", () => {
-      xit("Answer to A is x", () => {
-
+      it("Answer to A is x", () => {
+        store.commit("rule/setAnswer", { id: "A", value: "x" });
+        let result = wrapper.vm.checkRule(ruleA);
+        expect(result).toBeTruthy();
       });
 
-      xit("Answer to B is not y", () => {
-
+      it("Answer to B is not y", () => {
+        store.commit("rule/setAnswer", { id: "B", value: "B" });
+        let result = wrapper.vm.checkRule(ruleB);
+        expect(result).toBeTruthy();
       });
 
-      xit("Answer to C contains z", () => {
+      it("Answer to C contain z", () => {
+        store.commit("rule/setAnswer", { id: "C", value: "jghfdhsgazhfudjewui23!@#" });
+        let result = wrapper.vm.checkRule(ruleC);
+        expect(result).toBeTruthy();
+      });
+    });
 
+    describe("returns false when", () => {
+      it("Answer to A is not x", () => {
+        store.commit("rule/setAnswer", { id: "A", value: "not x" });
+        let result = wrapper.vm.checkRule(ruleA);
+        expect(result).not.toBeTruthy();
+      });
+
+      it("Answer to B is y", () => {
+        store.commit("rule/setAnswer", { id: "B", value: "y" });
+        let result = wrapper.vm.checkRule(ruleB);
+        expect(result).not.toBeTruthy();
+      });
+
+      it("Answer to C does not contain z", () => {
+        store.commit("rule/setAnswer", { id: "C", value: "jghfdhsgahfudjewui23!@#" });
+        let result = wrapper.vm.checkRule(ruleC);
+        expect(result).not.toBeTruthy();
       });
     });
   });
