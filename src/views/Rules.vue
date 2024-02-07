@@ -101,9 +101,6 @@ export default {
       // cheking that rules and groups apply
       // returns true if all/any rules apply, depending on logic property
 
-      console.log("Group:");
-      console.log(rule_group.logic);
-
       //////////////////////////////////////////////////////
       // TODO: check that all rules and groups apply
       // ~10 - 15 lines of code
@@ -132,10 +129,6 @@ export default {
       // cheking  that a rule applies
       // returns if combination of expected answer, operation and user answer is true
 
-      console.log("Rule:");
-      console.log(this.answers[rule.question_id]);
-      console.log(rule.operation);
-      console.log(rule.expected_answer);
       try {
         if (rule.operation === "is") {
           return rule.expected_answer === this.answers[rule.question_id];
