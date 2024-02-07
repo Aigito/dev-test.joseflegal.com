@@ -1,65 +1,29 @@
 <template>
-  <div>
-    <div class="container">
-      <button class="button" v-on:click="toggleFilter">KITTENS RULEZ!</button>
-      <div class="card" v-for="file in files" :key="file.id">
-        <div class="card-image">
-          <img :src="file.src" alt="picture of something cool" />
-        </div>
-        <div class="card-body">
-          <span class="tag tag-aqua">
-            {{ file.tags.split("|").join(" | ") }}
-          </span>
-          <h4>{{ file.filename }}</h4>
-          <p>File Description: {{ file.description }}</p>
-          <p>Created At: {{ formatDate(file.date) }}</p>
-        </div>
+  <div class="card">
+    <slot name="card-image">
+      <div class="card-image">
+        <img
+          src="https://media.istockphoto.com/id/1295362795/photo/angry-cat.webp?b=1&s=612x612&w=0&k=20&c=T9N8tLQKccCntamzO10IZuQLC6jQ9Vr_a4pVeYibwTg="
+          alt="Random Cat Pic"
+        />
       </div>
-    </div>
+    </slot>
+    <slot name="card-body">
+      <div class="card-body">
+        <span class="tag tag-purple">Random Tag</span>
+        <h4>Random File Name</h4>
+        <p>File Description: Random File Description</p>
+        <p>Created At: Random Date</p>
+      </div>
+    </slot>
   </div>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      filterOn: false,
-    };
-  },
-  methods: {
-    toggleFilter() {
-      this.filterOn = !this.filterOn;
-    },
-    formatDate(date) {
-      return new Date(date).toString().slice(4, 15);
-    },
-    filterAndSortFilesWithKittens() {
-      const filesWithKittenTag = this.$store.state["file"].files.filter(
-        (file) => file.tags.includes("kitten")
-      );
-      const sortedByDate = filesWithKittenTag.sort(
-        (a, b) => new Date(b.date) - new Date(a.date)
-      );
-      return sortedByDate;
-    },
-  },
-  computed: {
-    files() {
-      if (this.filterOn) {
-        return this.filterAndSortFilesWithKittens();
-      } else {
-        return this.$store.state["file"].files;
-      }
-    },
-  },
-};
+export default {};
 </script>
 
 <style lang="scss">
-.container {
-  display: block;
-}
-
 .card {
   margin: 10px;
   background-color: #fff;
