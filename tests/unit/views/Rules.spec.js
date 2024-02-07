@@ -6,7 +6,7 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 
 describe("Rules", () => {
-  let store, wrapper;
+  let ruleGroup, store, wrapper;
 
   beforeEach(() => {
     store = new Vuex.Store({
@@ -62,6 +62,17 @@ describe("Rules", () => {
               };
             }),
           },
+          getters: {
+            answers: (state) => {
+              return state.answers;
+            },
+            rules: (state) => {
+              return state.rules;
+            },
+            rule_groups: (state) => {
+              return state.rule_groups;
+            },
+          },
         },
       },
     });
@@ -70,14 +81,15 @@ describe("Rules", () => {
       localVue,
       store,
     });
+
+    ruleGroup = store._modulesNamespaceMap["rule/"].state.rule_groups[1];
   });
 
-  it("test", () => {
-    expect(store._modulesNamespaceMap["rule/"].state.answers).toBeTruthy();
-  });
-
-  it("test2", () => {
-    expect(store._modulesNamespaceMap["rule/"].state.answers["A"]).toBe("x");
+  describe("returns correct boolean result when", () => {
+    it("A OR B are true, AND C is true", () => {
+      let result = wrapper.vm.checkGroup(ruleGroup);
+      expect(result).toBe(true);
+    });
   });
 
   it("test3", () => {
