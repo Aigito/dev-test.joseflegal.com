@@ -101,6 +101,22 @@ describe("Rules", () => {
     ruleGroup = storeState.rule_groups[1];
   });
 
+  describe("#checkRule", () => {
+    describe("returns true when", () => {
+      xit("Answer to A is x", () => {
+
+      });
+
+      xit("Answer to B is not y", () => {
+
+      });
+
+      xit("Answer to C contains z", () => {
+
+      });
+    });
+  });
+
   describe("#checkGroup", () => {
     describe("returns true when", () => {
       it("A is true && C is true; Question B is also skipped", () => {
