@@ -50,17 +50,17 @@ In `src/views/QA.vue` you'll find a Vue.js view that we want you to test 🧐.
 Additionally, test a uniqueness requirement for `entity.id` property. Objects can be accessed and modified using requests:
 
 ```
-  GET    http://localhost:3000/entities  
-  GET    http://localhost:3000/entities/[id] 
-  POST   http://localhost:3000/entities  
-  PUT    http://localhost:3000/entities/[id] 
-  DELETE http://localhost:3000/entities/[id] 
+  GET    http://localhost:3000/entities
+  GET    http://localhost:3000/entities/[id]
+  POST   http://localhost:3000/entities
+  PUT    http://localhost:3000/entities/[id]
+  DELETE http://localhost:3000/entities/[id]
 ```
 
 2. **e2e frontend testing:** Using [Cypress](https://www.cypress.io/)(or a tool of your preference) test form submission on the QA page.
-3. **Extra credit:** Using [Lighthouse](https://developers.google.com/web/tools/lighthouse) run an audit of the QA page and document your performance and acesebility findings.
+3. **Extra credit:** Using [Lighthouse](https://developers.google.com/web/tools/lighthouse) run an audit of the QA page and document your performance and accessibility findings.
 
-When done, save required files in the `tests/` folder and add instructions to the `README.md` 📝. 
+When done, save required files in the `tests/` folder and add instructions to the `README.md` 📝.
  - Be sure and include as much information as you can about how you are testing and what future tools improvements you might add going forward.
 
 ## Getting the project running
@@ -95,3 +95,102 @@ npm run dev
 ## Customize configuration
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+## Submission Notes
+
+### 1. Project Overview:
+Josef Coding Challenge as attempted by Dylan Pee, timeboxed to 7 1/2 days, starting from Thursday 1/2/2024 to midday Wednesday 8/2/2024.
+
+### 2. Approach:
+The overarching theme of the approach was understand the problem, identify key requirements and then breaking them down to smaller steps prior to tackling them.
+
+When writing code, both simplicity and readability were prioritized in order to ensure long term maintainability amd understandability.
+
+Throughout the challenge itself, I aimed to strike a balance between efficiency and elegance, with the goal of having clear cut solutions.
+
+Ticket creation in Trello (link below) and note-taking (PDF provided) were also crucial steps taken in order to help progress this challenge.
+
+Special Mention: I also used Gitmojis in my git commit messages, I outlined a legend below for ease of reference (link also provided in the Extra Links section for the full table).
+- ✨: New Feature
+- 🔥: Removed Code
+- 🔨: Refactor Code
+- 🚧: Work In Progress
+- 💥: Breaking Changes
+- 🐛: Bugfix
+- ✅: Added Tests
+- ✔️: Tests Passed
+- 🎨: Improved Format/Structure
+- 👕: Linter
+- 📚: Documentation
+
+### 3. Technologies Used:
+- JavaScript
+- Vue.js
+- SCSS
+- Jest
+- Trello
+- Obsidian
+
+### 4. Setup Instructions:
+No extra setup steps required. Please refer to [Getting the project running](https://github.com/Aigito/dev-test.joseflegal.com/tree/dylan-attempt?tab=readme-ov-file#getting-the-project-running) section for setup instructions.
+
+### 5. Functionality:
+Throughout this project, the following functionality have been implemented:
+
+#### Front End
+1. Render list of files from based on API response given.
+2. Filter button that will filter files with `kitten` tag and sort by date created.
+
+#### Back End
+1. Finished implementing the `checkGroup()` method.
+2. Implemented unit tests under `tests/unit/views/Rules.spec.js` that make sure rule / rule group checker works.
+
+#### QA
+[NOT ATTEMPTED]
+
+### 6. Testing:
+Testing was performed using the Jest framework, and tested two methods specifically `checkGroup()` and `checkRule()`
+
+#### checkGroup()
+1. **Test case 1**: Test that `true` result is returned as expected when given the correct combination of answers as set out in the criteria above
+- Note: Test Case 1 also tests and make sure that Question B is skipped whenever the answer to Question A is `true`
+
+2. **Test case 2**: Test that `false` result is returned as expected when given a specific combination of answers as set out in the criteria above
+
+#### checkRule()
+1. **Test case 1**: Test that `true` result is returned when the correct answers are provided based on each rule criterion as set out above
+2. **Test case 2**: Test that `false` result is returned when the incorrect answers are provided based on each rule criterion as set out above
+
+### 7. Challenges Faced:
+Throughout the challenge I ran into a number of challenges, some bigger than others. I will briefly outline them below:
+1. Vue:
+- The first biggest hurdle was that this project is a Vue app, and having very litte experience with frontend frameworks, found myself quickly roadblocked and unable to progress with the challenge until I have learnt more.
+- Hence, the first day and a half was mostly spent researching and learning the Vue.js framework and how it worked, the problems it solved, the syntax, the various API Options, etc.
+- Luckily, the resources that I used were easy to follow and soon found myself able to progress forward with the challenges.
+
+2. JavaScript:
+- The second hurdle was writting JavaScript, with most of my experience being in Ruby on Rails, the challenge became slightly more difficult as I had to navigate around the syntactical differences between the two.
+- Again, with the help of documentation and research, I was able to get around most of it and progressed the challenges smoothly.
+
+3. Jest:
+- Yet another framework that I have not dealt with previously. I am familiar with RSpec and so testing in general is not the issue, more so getting to know syntactical differences and figuring out how to get things that I know work in RSpec to work in Jest.
+
+### 8. Possible Improvements:
+1. The Front End card components could have been a much better job. Even though the functionalities work, the styling leaves much to be desired.
+2. The Back End rule engine works as expected though would have liked to be able to refactor it more to reduce the lines of code
+
+### 9. Conclusion:
+The coding challenge was challenging but very rewarding. I was able to pick up and learn a lot of new things thanks to this challenge that will no doubt propel me even further on my journey to become a better developer.
+
+It was definitely a shame that I was not able to attempt all of the challenges components but I am glad that I was able to achieve all that I could in the time that was given to me.
+
+There are definitely more things for me to learn and this challenge has done me the favor of showing me the knowledge gaps that I need to fill.
+
+### 10. Additional Notes:
+Initially, I was only supposed to have 1 week to finish the challenge. However, I was granted an extra half-day extension due to personal circumstances. I'd like to take the opportunity to thank Marc Lee for his generosity.
+
+### 11. Extra Links:
+- [Trello link](https://trello.com/b/0pDCNtRC/josef-coding-challenge)
+- [Gitmoji Legend Table](https://gist.github.com/parmentf/035de27d6ed1dce0b36a)
+- [LinkedIn](https://www.linkedin.com/in/dylanpee/)
