@@ -104,7 +104,6 @@ export default {
       //////////////////////////////////////////////////////
       // TODO: check that all rules and groups apply
       // ~10 - 15 lines of code
-      let results = {};
 
       // @return {Array} of unique rule ids sorted in asc order of question_id letter code
       let ruleIds = this.collectRuleIds(rule_group);
@@ -113,16 +112,19 @@ export default {
         let rule = this.rules[id];
         let question_id = rule.question_id;
 
-        if (question_id === "B" && results["A"]) {
+        if (question_id === "B" && this.results["A"]) {
           continue;
         }
 
         let result = this.checkRule(rule);
-        results[question_id] = result;
+        this.$store.dispatch("rule/saveResults", {
+          question_id: question_id,
+          result: result,
+        });
       }
 
       // @return {Boolean} result for multiple group example
-      return (results["A"] || results["B"]) && results["C"];
+      return (this.results["A"] || this.results["B"]) && this.results["C"];
       // ////////////////////////////////////////////////////
     },
     checkRule(rule) {
@@ -187,6 +189,9 @@ export default {
   computed: {
     answers() {
       return this.$store.getters["rule/answers"];
+    },
+    results() {
+      return this.$store.getters["rule/results"];
     },
     rules() {
       return this.$store.getters["rule/rules"];
