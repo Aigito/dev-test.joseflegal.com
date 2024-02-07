@@ -62,6 +62,11 @@ describe("Rules", () => {
               };
             }),
           },
+          mutations: {
+            setAnswer: (state, { id, value }) => {
+              state.answers[id] = value;
+            },
+          },
           getters: {
             answers: (state) => {
               return state.answers;
@@ -86,15 +91,56 @@ describe("Rules", () => {
   });
 
   describe("returns correct boolean result when", () => {
-    it("A OR B are true, AND C is true", () => {
+    it("A is true && C is true (B is skipped)", () => {
+      let result = wrapper.vm.checkGroup(ruleGroup);
+      expect(result).toBe(true);
+      // TODO: Expect, result to not have B in it
+    });
+
+    it("A is true && C is false (B is skipped)", () => {
+      store.commit("rule/setAnswer", {
+        id: "C",
+        value: "abcdefghijklmnopqrstuvwxy",
+      });
+      let result = wrapper.vm.checkGroup(ruleGroup);
+      expect(result).toBe(false);
+      // TODO: Expect, result to not have B in it
+    });
+
+    it("(A is false || B is true) && C is true", () => {
+      store.commit("rule/setAnswer", { id: "A", value: "not x" });
       let result = wrapper.vm.checkGroup(ruleGroup);
       expect(result).toBe(true);
     });
-  });
 
-  it("test3", () => {
-    wrapper.vm.increase();
+    it("(A is false || B is true) && C is false", () => {
+      store.commit("rule/setAnswer", { id: "A", value: "not x" });
+      store.commit("rule/setAnswer", {
+        id: "C",
+        value: "abcdefghijklmnopqrstuvwxy",
+      });
+      let result = wrapper.vm.checkGroup(ruleGroup);
+      expect(result).toBe(false);
+    });
 
-    expect(wrapper.vm.count).toBe(1);
+    it("(A is false || B is false) && C is true", () => {
+      store.commit("rule/setAnswer", { id: "A", value: "not x" });
+      store.commit("rule/setAnswer", { id: "B", value: "y" });
+      let result = wrapper.vm.checkGroup(ruleGroup);
+      expect(result).toBe(false);
+    });
+
+    it("A, B and C are all false", () => {
+      store.commit("rule/setAnswer", { id: "A", value: "not x" });
+      store.commit("rule/setAnswer", { id: "B", value: "y" });
+      store.commit("rule/setAnswer", {
+        id: "C",
+        value: "abcdefghijklmnopqrstuvwxy",
+      });
+      let result = wrapper.vm.checkGroup(ruleGroup);
+      expect(result).toBe(false);
+    });
+
+    // TODO: If A and B are both false, C should not have been evaluated and the test stops
   });
 });
