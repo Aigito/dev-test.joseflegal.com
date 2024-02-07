@@ -101,53 +101,59 @@ describe("Rules", () => {
     ruleGroup = storeState.rule_groups[1];
   });
 
-  describe("returns correct boolean result when", () => {
-    it("A is true && C is true (B is skipped)", () => {
-      let result = wrapper.vm.checkGroup(ruleGroup);
-      expect(result).toBe(true);
-    });
-
-    it("A is true && C is false (B is skipped)", () => {
-      store.commit("rule/setAnswer", {
-        id: "C",
-        value: "abcdefghijklmnopqrstuvwxy",
+  describe("#checkGroup", () => {
+    describe("returns true when", () => {
+      it("A is true && C is true; Question B is also skipped", () => {
+        let result = wrapper.vm.checkGroup(ruleGroup);
+        expect(storeState.results).not.toHaveProperty("B");
+        expect(result).toBe(true);
       });
-      let result = wrapper.vm.checkGroup(ruleGroup);
-      expect(result).toBe(false);
-    });
 
-    it("(A is false || B is true) && C is true", () => {
-      store.commit("rule/setAnswer", { id: "A", value: "not x" });
-      let result = wrapper.vm.checkGroup(ruleGroup);
-      expect(result).toBe(true);
-    });
-
-    it("(A is false || B is true) && C is false", () => {
-      store.commit("rule/setAnswer", { id: "A", value: "not x" });
-      store.commit("rule/setAnswer", {
-        id: "C",
-        value: "abcdefghijklmnopqrstuvwxy",
+      it("(A is false || B is true) && C is true", () => {
+        store.commit("rule/setAnswer", { id: "A", value: "not x" });
+        let result = wrapper.vm.checkGroup(ruleGroup);
+        expect(result).toBe(true);
       });
-      let result = wrapper.vm.checkGroup(ruleGroup);
-      expect(result).toBe(false);
     });
 
-    it("(A is false || B is false) && C is true", () => {
-      store.commit("rule/setAnswer", { id: "A", value: "not x" });
-      store.commit("rule/setAnswer", { id: "B", value: "y" });
-      let result = wrapper.vm.checkGroup(ruleGroup);
-      expect(result).toBe(false);
-    });
-
-    it("A, B and C are all false", () => {
-      store.commit("rule/setAnswer", { id: "A", value: "not x" });
-      store.commit("rule/setAnswer", { id: "B", value: "y" });
-      store.commit("rule/setAnswer", {
-        id: "C",
-        value: "abcdefghijklmnopqrstuvwxy",
+    describe("returns false when", () => {
+      it("A is true && C is false; Question B is also skipped", () => {
+        store.commit("rule/setAnswer", {
+          id: "C",
+          value: "abcdefghijklmnopqrstuvwxy",
+        });
+        let result = wrapper.vm.checkGroup(ruleGroup);
+        expect(storeState.results).not.toHaveProperty("B");
+        expect(result).toBe(false);
       });
-      let result = wrapper.vm.checkGroup(ruleGroup);
-      expect(result).toBe(false);
+
+      it("(A is false || B is true) && C is false", () => {
+        store.commit("rule/setAnswer", { id: "A", value: "not x" });
+        store.commit("rule/setAnswer", {
+          id: "C",
+          value: "abcdefghijklmnopqrstuvwxy",
+        });
+        let result = wrapper.vm.checkGroup(ruleGroup);
+        expect(result).toBe(false);
+      });
+
+      it("(A is false || B is false) && C is true", () => {
+        store.commit("rule/setAnswer", { id: "A", value: "not x" });
+        store.commit("rule/setAnswer", { id: "B", value: "y" });
+        let result = wrapper.vm.checkGroup(ruleGroup);
+        expect(result).toBe(false);
+      });
+
+      it("A, B and C are all false", () => {
+        store.commit("rule/setAnswer", { id: "A", value: "not x" });
+        store.commit("rule/setAnswer", { id: "B", value: "y" });
+        store.commit("rule/setAnswer", {
+          id: "C",
+          value: "abcdefghijklmnopqrstuvwxy",
+        });
+        let result = wrapper.vm.checkGroup(ruleGroup);
+        expect(result).toBe(false);
+      });
     });
   });
 });
