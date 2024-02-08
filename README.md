@@ -124,7 +124,24 @@ Special Mention: I also used Gitmojis in my git commit messages, I outlined a le
 - 👕: Linter
 - 📚: Documentation
 
-### 3. Technologies Used:
+### 3. Assumptions:
+1. Performance Expectations:
+
+Assumed that the challenge desired for an efficient solution, and so the aim for me was to write code that prioritized completeness of a solution over completing as much as the challenge as possible.
+
+2. Additional Features:
+
+Assumed that the core functionality should take precedence over everything else, since having an app without its core functionality is to have no app at all. Building on what was mentioned in point 1, focus was on delivering a complete solution, even if it meant unable to attempt certain aspects of the challenge.
+
+3. Input Validation:
+
+Assumed that inputs are valid (eg. Front End files inputs and Back End answers inputs) and within the expected constraints unless specified otherwise. Given enough time, would have liked to implement type checking as well to make sure that valid input types are passed by the user to the app.
+
+4. Open to Change:
+
+Assumed that what I know may not be the best solution or even if it is, it may well change in future. Maintaining an open mindset and focus on leaving room for future improvement. This is especially true, since an extra challenge that I had to tackle was to learn a new framework within the limited time, and therefore the solution is far from perfect.
+
+### 4. Technologies Used:
 - JavaScript
 - Vue.js
 - SCSS
@@ -132,10 +149,10 @@ Special Mention: I also used Gitmojis in my git commit messages, I outlined a le
 - Trello
 - Obsidian
 
-### 4. Setup Instructions:
+### 5. Setup Instructions:
 No extra setup steps required. Please refer to [Getting the project running](https://github.com/Aigito/dev-test.joseflegal.com/tree/dylan-attempt?tab=readme-ov-file#getting-the-project-running) section for setup instructions.
 
-### 5. Functionality:
+### 6. Functionality:
 Throughout this project, the following functionality have been implemented:
 
 #### Front End
@@ -149,13 +166,13 @@ Throughout this project, the following functionality have been implemented:
 #### QA
 1. API Testing
 - Able to test functionaity of REST API for the `entity` object. Please see Postman Workspace via link below.
-- (Postman link)[https://www.postman.com/payload-cosmonaut-53927522/workspace/josef-coding-challenge/collection/32601695-d202e5e8-6a54-4a25-8b6d-b5f6b4ea7836?action=share&creator=32601695]
+- [Postman link](https://www.postman.com/payload-cosmonaut-53927522/workspace/josef-coding-challenge/collection/32601695-d202e5e8-6a54-4a25-8b6d-b5f6b4ea7836?action=share&creator=32601695)
 
 2. Cypress e2e (not attempted)
 
 3. Lighthouse QA (not attempted)
 
-### 6. Testing:
+### 7. Testing:
 Testing was performed using the Jest framework, and tested two methods specifically `checkGroup()` and `checkRule()`
 
 #### checkGroup()
@@ -168,7 +185,7 @@ Testing was performed using the Jest framework, and tested two methods specifica
 1. **Test case 1**: Test that `true` result is returned when the correct answers are provided based on each rule criterion as set out above
 2. **Test case 2**: Test that `false` result is returned when the incorrect answers are provided based on each rule criterion as set out above
 
-### 7. Challenges Faced:
+### 8. Challenges Faced:
 Throughout the challenge I ran into a number of challenges, some bigger than others. I will briefly outline them below:
 1. Vue:
 - The first biggest hurdle was that this project is a Vue app, and having very litte experience with frontend frameworks, found myself quickly roadblocked and unable to progress with the challenge until I have learnt more.
@@ -182,21 +199,23 @@ Throughout the challenge I ran into a number of challenges, some bigger than oth
 3. Jest:
 - Yet another framework that I have not dealt with previously. I am familiar with RSpec and so testing in general is not the issue, more so getting to know syntactical differences and figuring out how to get things that I know work in RSpec to work in Jest.
 
-### 8. Possible Improvements:
+### 9. Possible Improvements:
 1. The Front End card components could have been a much better job. Even though the functionalities work, the styling leaves much to be desired.
-2. The Back End rule engine works as expected though would have liked to be able to refactor it more to reduce the lines of code
+2. The Back End rule engine works as expected though would have liked to be able to refactor it more to reduce the lines of code, particularly the `collectRuleIds()` and `checkGroup()` methods. Understand that the notes said the `checkGroup()` to be ~10 - 15 lines of code, I went to for what I perceived to be a more complete solution rather than trying to adhere to the 10 - 15 lines of code rule.
 
-### 9. Conclusion:
+### 10. Conclusion:
 The coding challenge was challenging but very rewarding. I was able to pick up and learn a lot of new things thanks to this challenge that will no doubt propel me even further on my journey to become a better developer.
 
-It was definitely a shame that I was not able to attempt all of the challenges components but I am glad that I was able to achieve all that I could in the time that was given to me.
+It was definitely a shame that I was not able to attempt all of the challenges components but I am glad that I was able to achieve all that I could in the time that
+was given to me.
 
 There are definitely more things for me to learn and this challenge has done me the favor of showing me the knowledge gaps that I need to fill.
 
-### 10. Additional Notes:
+### 11. Additional Notes:
 Initially, I was only supposed to have 1 week to finish the challenge. However, I was granted an extra half-day extension due to personal circumstances. I'd like to take the opportunity to thank Marc Lee for his generosity.
 
-### 11. Extra Links:
+### 12. Extra Links:
 - [Trello link](https://trello.com/b/0pDCNtRC/josef-coding-challenge)
+- [Postman link](https://www.postman.com/payload-cosmonaut-53927522/workspace/josef-coding-challenge/collection/32601695-d202e5e8-6a54-4a25-8b6d-b5f6b4ea7836?action=share&creator=32601695)
 - [Gitmoji Legend Table](https://gist.github.com/parmentf/035de27d6ed1dce0b36a)
 - [LinkedIn](https://www.linkedin.com/in/dylanpee/)
