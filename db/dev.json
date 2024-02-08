@@ -12,6 +12,9 @@
     {
       "id": 2,
       "property": "bar"
+    },
+    {
+      "id": 3
     }
   ],
   "files": [

@@ -147,7 +147,13 @@ Throughout this project, the following functionality have been implemented:
 2. Implemented unit tests under `tests/unit/views/Rules.spec.js` that make sure rule / rule group checker works.
 
 #### QA
-[NOT ATTEMPTED]
+1. API Testing
+- Able to test functionaity of REST API for the `entity` object. Please see Postman Workspace via link below.
+- (Postman link)[https://www.postman.com/payload-cosmonaut-53927522/workspace/josef-coding-challenge/collection/32601695-d202e5e8-6a54-4a25-8b6d-b5f6b4ea7836?action=share&creator=32601695]
+
+2. Cypress e2e (not attempted)
+
+3. Lighthouse QA (not attempted)
 
 ### 6. Testing:
 Testing was performed using the Jest framework, and tested two methods specifically `checkGroup()` and `checkRule()`
